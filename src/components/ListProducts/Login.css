@@ -1,0 +1,62 @@
+#root>div{
+  padding: 0;
+  margin: 0;
+}
+.contentPage {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color:whitesmoke;
+  padding: 0;
+  /*margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: 50px;
+  margin-left: 50px;
+  position: absolute;
+  background-color: #a71830;
+  top: 10%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+  text-align: left;*/
+}
+.contentForm{
+  border-radius: 15px;
+  background-color: lightgrey;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+#MainTitle{
+  text-align: center;
+  color: #333;
+}  
+
+#SubTitle{
+  text-align: center;
+  color: #333;
+}
+
+#image{
+  /*position: relative;
+  left: 35%;
+  right: 25%;*/
+  margin: auto;
+}
+
+#SignIn{
+  position: relative;
+  left: 40%;
+  right: 25%;
+}
+
+label{
+  color: #444;
+}
+
+h2{
+  text-align: center;
+}
