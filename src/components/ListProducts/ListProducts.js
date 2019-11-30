@@ -16,7 +16,7 @@ export default class ListProducts extends Component {
   }
 
   sayHello() {
-    this.makeLogIn(validate);
+    this.makeRequest();
   }
   
   makeRequest(){
@@ -24,13 +24,13 @@ export default class ListProducts extends Component {
       value,
       valuePass
 		} = this.state;
-  if(validate){
     const url ='https://private-ce4b1-lmdev.apiary-mock.com/country/language/cms/v1/lac/log-in/products.entity.json';
     axios({
       method: 'get',
       url
       }).then((response) => {
         if(response.status == 200){
+          console.log(response);
           console.log('200 http status resp');
         }else{
           if(response.status == 200){
@@ -40,12 +40,11 @@ export default class ListProducts extends Component {
           }
         }
     });
-  }
 }
 
 render() {
   return (
-    <table></table>
+    <table>{this.sayHello()}</table>
     ) 
   }
 }
