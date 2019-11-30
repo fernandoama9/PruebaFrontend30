@@ -6,44 +6,70 @@ import axios from 'axios';
 import crypto from 'crypto';
 import servicio from "../Main/getRoutes";
 
-export default class Login extends Component {
+export default class AddProduct extends Component {
   constructor(props) {
     super(props);
     this.sayHello = this.sayHello.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleChangeEmpresa = this.handleChangeEmpresa.bind(this);
+    this.handleChangeAmount = this.handleChangeAmount.bind(this);
+    this.handleChangeMoneda = this.handleChangeMoneda.bind(this);
+    this.handleChangeImage = this.handleChangeImage.bind(this);
+    this.handleChangeTitle =  this.handleChangeTitle.bind(this);
+    this.handleChangeDescription =  this.handleChangeDescription.bind(this);    
     this.state = {
-      value: '',
-      valuePass: '',
+      valueTitle: '',
       valueEmpresa:'',
       valueAmount:'',
       valueImagen:'',
       valueMoneda:'',
+      valueDescription: '',
       showResults : false
     };
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
-
   handleChangeEmpresa(event) {
-    this.setState({valuePass: event.target.value});
+    this.setState({valueEmpresa: event.target.value});
   }
 
-  checkFormValidity(passwordValue, userNameValue) {
-		if (userNameValue && passwordValue) {
-      if(this.userNameValidation(userNameValue)){    
+  handleChangeAmount(event) {
+    this.setState({valueAmount: event.target.value});
+  }
+
+  handleChangeTitle(event) {
+    this.setState({valueTitle: event.target.value});
+  }
+
+  handleChangeImage(event) {
+    this.setState({valueImagen: event.target.value});
+  }
+
+  handleChangeMoneda(event) {
+    this.setState({valueMoneda: event.target.value});
+  }
+
+  handleChangeDescription(event) {
+    this.setState({valueDescription: event.target.value});
+  }
+
+  checkFormValidity(titulo, description, empresa, precio, image, moneda) {
+		if (titulo && description && empresa && precio && image && moneda) {
+      if(precio <= 0.0){
+        return false;
+      }
+      if(this.validateRegexAlpha(titulo)){    
+      return true;
+      }
+      if(this.validateRegexAlpha(moneda)){    
       return true;
       }
 		} else {
       return false;
 		}
 	}
-	userNameValidation(value) {
-		let regex_emailNumberValue = new RegExp(/^[a-z]+$/g);
+	validateRegexAlpha(value) {
+		let regex_titleValue = new RegExp(/^[a-z]+$/g);
 		if (value.length >= 5) {
-      if (regex_emailNumberValue.test(value)) {
+      if (regex_titleValue.test(value)) {
         return true;
       }else{
         return false;
@@ -56,52 +82,23 @@ export default class Login extends Component {
 
   sayHello() {
     const {
-      value,
-      valuePass
+      valueTitle,
+      valueDescription,
+      valueAmount,
+      valueEmpresa,
+      valueImagen,
+      valueMoneda
 		} = this.state;
     let validate = false;
-    this.setState({
-			userNameValue: value,
-			passwordValue: valuePass,
-		});	
-    validate = this.checkFormValidity(valuePass, value);
-    this.makeLogIn(validate);
+    debugger;
+    this.state.showResults = this.checkFormValidity(valueTitle, valueDescription, valueAmount, valueEmpresa, valueImagen, valueMoneda);
   }
-  
-  makeLogIn(validate){
-    const {
-      value,
-      valuePass
-		} = this.state;
-  if(validate){
-    const url ='qwertyuio';
-    axios({
-      method: 'POST',
-      url,
-      headers: {
-        Accept: 'application/json',
-        ['Content-Type']: 'application/json'
-      }, 
-      data: {
-        user: value, // This is the body part
-        password: valuePass,
-    }
-      }).then((response) => {
-        if(response.status == 200){
-          window.location.reload(false);
-        }else{
-          console.log("Invalid Credentials");
-          this.setState({ showResults: true });
-        }
-    });
-  }
-}
 
 isError(val) {
-  if(val){
+  if(!val){
   return (
       <div id="results" className="search-results">
-        <h2>Invalid Credentials</h2>
+        <h2>Invalid parameters</h2>
       </div>
   );
   }else{
@@ -119,55 +116,47 @@ render() {
             <Label for="Empresa">Empresa:</Label>
             <Input 
               type="text"
-              value={this.state.value} 
-              onChange={this.handleChange} 
+              value={this.state.valueEmpresa} 
+              onChange={this.handleChangeEmpresa} 
               ref={(c) => this.empresa = c} 
               name="empresa"
               placeholder="Empresa"
-              /> 
-          </FormGroup>
-          <FormGroup>
-            <Label for="product_title">Titulo del producto</Label>
+              />
+            <Label for="titulo">Titulo del producto</Label>
             <Input 
-              type="product_title"
+              type="text"
               placeholder="Titulo"
-              value={this.state.valuePass} 
-              onChange={this.handleChangePass} 
-              ref={(c) => this.password = c} 
-              name="password"
+              value={this.state.valueTitle} 
+              onChange={this.handleChangeTitle} 
+              ref={(c) => this.titulo = c} 
+              name="titulo"
               />
-          </FormGroup>
-          <FormGroup>
-            <Label for="password">Password</Label>
+            <Label for="Descripcion">Descripcion</Label>
             <Input 
-              type="password"
-              placeholder="********"
-              value={this.state.valuePass} 
-              onChange={this.handleChangePass} 
-              ref={(c) => this.password = c} 
-              name="password"
+              type="text"
+              placeholder="Descripcion"
+              value={this.state.valueDescription} 
+              onChange={this.handleChangeDescription} 
+              ref={(c) => this.descripcion = c} 
+              name="descripcion"
               />
-          </FormGroup>
-          <FormGroup>
-            <Label for="password">Password</Label>
+            <Label for="regularPrice">Precio regular</Label>
             <Input 
-              type="password"
-              placeholder="********"
-              value={this.state.valuePass} 
-              onChange={this.handleChangePass} 
-              ref={(c) => this.password = c} 
-              name="password"
+              type="text"
+              placeholder="Precio Regular"
+              value={this.state.valueAmount} 
+              onChange={this.handleChangeAmount} 
+              ref={(c) => this.regularPrice = c} 
+              name="regularPrice"
               />
-          </FormGroup>
-          <FormGroup>
-            <Label for="password">Password</Label>
+            <Label for="currency">Moneda</Label>
             <Input 
-              type="password"
-              placeholder="********"
-              value={this.state.valuePass} 
-              onChange={this.handleChangePass} 
-              ref={(c) => this.password = c} 
-              name="password"
+              type="text"
+              placeholder="Currency"
+              value={this.state.valueMoneda} 
+              onChange={this.handleChangeMoneda} 
+              ref={(c) => this.currency = c} 
+              name="currency"
               />
           </FormGroup>
           <div>

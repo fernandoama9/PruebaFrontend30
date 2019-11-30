@@ -168,8 +168,7 @@ img, object, embed, video {
 }
 .lm .header {
 	height: 70px;
-	 background-color: #757374;
-    background-image: url(img/bkg-header-gradient.jpg);
+	 background-color: #d4abac;
     background-position: left top;
     background-repeat: repeat-x;
 	width: 100%;

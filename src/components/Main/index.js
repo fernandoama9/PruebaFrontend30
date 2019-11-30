@@ -4,7 +4,7 @@ import {
   NavLink,
   HashRouter
 } from "react-router-dom";
-import Login from '../Login/AddProduct.js';
+import AddProduct from '../Login/AddProduct.js';
 import ListProducts from "../ListProducts/ListProducts.js";
 import Home from '../Home/Home.js';
 class Main extends Component {
@@ -20,8 +20,8 @@ class Main extends Component {
           </ul>
           <div className="content">
             <Route exact path="/" component={Home}/>
-            <Route path="/list-products" component={Login}/>
-            <Route path="/add-product" component={ListProducts}/>
+            <Route path="/list-products" component={ListProducts}/>
+            <Route path="/add-product" component={AddProduct}/>
           </div>
         </div>
         </HashRouter>
